@@ -12,6 +12,7 @@ gh workflow run release.yml -f snapshot=true
 # 3. 确认版本号一致
 grep "version" common/globals.go
 grep "版本" README.md
+grep "Version" README_EN.md
 ```
 
 ## 发版
@@ -20,7 +21,7 @@ grep "版本" README.md
 # 1. 确认 release notes 已就绪
 cat .github/release-notes/v<VERSION>.md
 
-# 2. 打 tag（在 dev 分支打 RC，在 main 分支打正式版）
+# 2. 打 tag（RC 手动打；正式版合并到 main 后由 CI 自动打 tag）
 git tag v<VERSION>
 git push origin v<VERSION>
 
@@ -47,18 +48,14 @@ git push origin v<VERSION>
 ## 正式版发布（RC → 正式）
 
 ```bash
-# 1. 合并 dev 到 main
-git checkout main
-git merge dev
-git push
-
-# 2. 更新版本号去掉 -rc
+# 1. 在 dev 分支准备正式版内容
 # common/globals.go, README.md, README_EN.md
-
-# 3. 准备正式版 release notes
 # .github/release-notes/v2.2.0.md
 
-# 4. 打 tag
-git tag v2.2.0
-git push origin v2.2.0
+# 2. 创建 dev -> main PR
+gh pr create --base main --head dev
+
+# 3. 合并 PR
+# main push 会自动读取 common/globals.go 中的版本号，创建 v<VERSION> tag
+# tag push 会触发 GoReleaser 构建并创建 GitHub Release
 ```
