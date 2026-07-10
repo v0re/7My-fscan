@@ -26,10 +26,16 @@ flag_module_thread_num:
   other: "Module thread count"
 flag_global_timeout:
   other: "Global timeout"
+global_timeout_adjusted:
+  other: "Large scan detected, global timeout adjusted from {{.V0}}s to {{.V1}}s (use -gt to override)"
+global_timeout_exceeded:
+  other: "Global timeout reached (-gt {{.V0}}s), scan aborted. Use -gt to increase or set to 0 to disable"
 flag_disable_ping:
   other: "Disable ping detection"
 flag_disable_tcp_probe:
   other: "Disable TCP supplementary probe"
+flag_disable_subnet_probe:
+  other: "Disable subnet pre-filter (optimization that skips empty /24 subnets in large scans)"
 flag_local_plugin:
   other: "Specify local plugin name (e.g.: cleaner, systeminfo, keylogger)"
 flag_debug:

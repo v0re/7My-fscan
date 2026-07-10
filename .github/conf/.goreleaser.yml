@@ -1,3 +1,5 @@
+version: 2
+
 project_name: "fscan"
 
 before:
@@ -135,17 +137,17 @@ builds:
 upx:
   - ids: [fscan, fscan-nolocal, fscan-web]
     enabled: true
-    goos: [windows, linux, freebsd]
-    goarch: [amd64, "386", arm, arm64, mips, mipsle]
-    compress: best
+    goos: [windows, linux]
+    goarch: [amd64, "386", arm64]
+    compress: "6"
     brute: false
     lzma: false
 
 archives:
   # 标准版归档
   - id: fscan
-    builds: [fscan]
-    format: binary
+    ids: [fscan]
+    formats: [binary]
     allow_different_binary_count: true
     name_template: >-
       fscan_{{ .Version }}_
@@ -158,8 +160,8 @@ archives:
 
   # 无本地插件版归档
   - id: fscan-nolocal
-    builds: [fscan-nolocal]
-    format: binary
+    ids: [fscan-nolocal]
+    formats: [binary]
     allow_different_binary_count: true
     name_template: >-
       fscan-nolocal_{{ .Version }}_
@@ -172,8 +174,8 @@ archives:
 
   # WebUI版归档
   - id: fscan-web
-    builds: [fscan-web]
-    format: binary
+    ids: [fscan-web]
+    formats: [binary]
     allow_different_binary_count: true
     name_template: >-
       fscan-web_{{ .Version }}_
@@ -238,7 +240,7 @@ release:
     **完整更新日志**: https://github.com/{{ .Env.GITHUB_OWNER }}/{{ .Env.GITHUB_REPO }}/compare/{{ .PreviousTag }}...{{ .Tag }}
 
 snapshot:
-  name_template: "{{ incpatch .Version }}-dev-{{ .ShortCommit }}"
+  version_template: "{{ incpatch .Version }}-dev-{{ .ShortCommit }}"
 
 metadata:
   mod_timestamp: "{{ .CommitTimestamp }}"

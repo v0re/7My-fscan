@@ -69,7 +69,7 @@ const (
 
 // 版本信息，通过 ldflags 注入
 var (
-	version = "2.2.0-rc.1"
+	version = "2.2.0"
 	commit  = "unknown"
 	date    = "unknown"
 )
