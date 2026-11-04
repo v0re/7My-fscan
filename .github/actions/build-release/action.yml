@@ -23,7 +23,7 @@ runs:
   using: 'composite'
   steps:
     - name: 设置 Go 环境
-      uses: actions/setup-go@v5
+      uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
       env:
         FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       with:
@@ -38,15 +38,15 @@ runs:
         go mod verify
 
     - name: 安装 UPX
-      uses: crazy-max/ghaction-upx@v3
+      uses: crazy-max/ghaction-upx@db8cc9515a4a7ea1b312cb82fbeae6d716daf777 # v3
       with:
         install-only: true
 
     - name: 使用 GoReleaser 构建
-      uses: goreleaser/goreleaser-action@v6
+      uses: goreleaser/goreleaser-action@e435ccd777264be153ace6237001ef4d979d3a7a # v6
       with:
         distribution: goreleaser
-        version: latest
+        version: v2.19.0
         args: release ${{ inputs.mode == 'snapshot' && '--snapshot' || '' }} --clean -f .github/conf/.goreleaser.yml ${{ inputs.release-args }}
       env:
         GITHUB_TOKEN: ${{ github.token }}
@@ -55,7 +55,7 @@ runs:
         PROJECT_NAME: ${{ github.event.repository.name }}
 
     - name: 上传产物
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
       env:
         FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       if: always()
